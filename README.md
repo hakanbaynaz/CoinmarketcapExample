@@ -1,7 +1,7 @@
 # CoinmarketcapExample
 ## Simple coin list application with dagger 2,  viewmodel and retrofit 
 
-Place your api key in ApiInterface class, you can get it https://coinmarketcap.com/api/documentation/v1/
+Place your api key in ApiInterface class to see how it works, you can get it https://coinmarketcap.com/api/documentation/v1/
 
 
 ## Libraries
