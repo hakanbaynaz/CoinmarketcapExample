@@ -6,7 +6,7 @@ Place your api key in ApiInterface class to see how it works, you can get it htt
 
 ## Libraries
 
-[Archtecture Components](https://developer.android.com/topic/libraries/architecture)
+[Architecture Components](https://developer.android.com/topic/libraries/architecture)
 
 [Dagger 2](https://google.github.io/dagger/android)
 
