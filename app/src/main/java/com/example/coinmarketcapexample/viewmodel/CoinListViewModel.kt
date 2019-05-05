@@ -18,6 +18,6 @@ class CoinListViewModel @Inject constructor(private val coinListRepository: Coin
 
     override fun onCleared() {
         super.onCleared()
-
+        coinListRepository.onCleared()
     }
 }

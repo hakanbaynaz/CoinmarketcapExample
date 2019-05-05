@@ -13,4 +13,9 @@ class CoinDetailViewModel @Inject constructor(private val coinDetailRepository: 
     fun getLoadingLiveData() = coinDetailRepository.getIsLoadingLiveData()
 
     fun fetchData(id: Int) = coinDetailRepository.fetchData(id)
+
+    override fun onCleared() {
+        super.onCleared()
+        coinDetailRepository.onCleared()
+    }
 }
