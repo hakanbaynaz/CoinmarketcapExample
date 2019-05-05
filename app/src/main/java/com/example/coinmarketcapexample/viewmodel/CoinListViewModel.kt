@@ -16,4 +16,8 @@ class CoinListViewModel @Inject constructor(private val coinListRepository: Coin
 
     fun loadMore() = coinListRepository.loadMore()
 
+    override fun onCleared() {
+        super.onCleared()
+
+    }
 }

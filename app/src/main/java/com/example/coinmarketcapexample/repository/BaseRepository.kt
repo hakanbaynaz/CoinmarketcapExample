@@ -16,4 +16,5 @@ abstract class BaseRepository<T : BaseDataModel> {
 
     open fun getIsLoadingLiveData() = mIsLoadingLiveData
 
+    abstract fun onCleared()
 }

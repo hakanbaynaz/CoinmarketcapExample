@@ -9,7 +9,9 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class RetrofitCoinDetailRepository @Inject constructor(private val apiInterface: ApiInterface) :
-    CoinDetailRepository() {
+    CoinDetailRepository(), Callback<CoinDetailDataModel> {
+
+    private var mCall: Call<CoinDetailDataModel>? = null
 
     override fun fetchData(id: Int) {
         getIsLoadingLiveData().value?.let {
@@ -19,24 +21,29 @@ class RetrofitCoinDetailRepository @Inject constructor(private val apiInterface:
         }
         getIsLoadingLiveData().value = true
 
-        apiInterface.getCoinDetails(id).enqueue(object : Callback<CoinDetailDataModel> {
-            override fun onFailure(call: Call<CoinDetailDataModel>, t: Throwable) {
-                getIsLoadingLiveData().value = false
-                val apiErrorModel = ApiErrorUtil.handleErrorData(t)
-                getErrorLiveData().value = apiErrorModel
-                t.printStackTrace()
-            }
+        mCall = apiInterface.getCoinDetails(id)
+        mCall?.enqueue(this)
+    }
 
-            override fun onResponse(call: Call<CoinDetailDataModel>, response: Response<CoinDetailDataModel>) {
-                getIsLoadingLiveData().value = false
-                if (!response.isSuccessful) {
-                    val apiErrorModel = ApiErrorUtil.handleErrorData(response.errorBody()?.string())
-                    getErrorLiveData().value = apiErrorModel
-                    return
-                }
-                getLiveData().value = response.body()
-            }
-        })
+    override fun onFailure(call: Call<CoinDetailDataModel>, t: Throwable) {
+        getIsLoadingLiveData().value = false
+        val apiErrorModel = ApiErrorUtil.handleErrorData(t)
+        getErrorLiveData().value = apiErrorModel
+        t.printStackTrace()
+    }
+
+    override fun onResponse(call: Call<CoinDetailDataModel>, response: Response<CoinDetailDataModel>) {
+        getIsLoadingLiveData().value = false
+        if (!response.isSuccessful) {
+            val apiErrorModel = ApiErrorUtil.handleErrorData(response.errorBody()?.string())
+            getErrorLiveData().value = apiErrorModel
+            return
+        }
+        getLiveData().value = response.body()
+    }
+
+    override fun onCleared() {
+        mCall?.cancel()
     }
 }
 
